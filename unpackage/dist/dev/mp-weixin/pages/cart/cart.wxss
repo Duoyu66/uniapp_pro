@@ -1,0 +1,14 @@
+@charset "UTF-8";
+/* 水平间距 */
+/* 水平间距 */
+.cart-title {
+  height: 40px;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #EFEFEF;
+}
+.cart-title .cart-title-text {
+  font-size: 14px;
+  margin-left: 10px;
+}
+

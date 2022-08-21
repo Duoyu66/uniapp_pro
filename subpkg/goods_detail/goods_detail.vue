@@ -112,7 +112,6 @@
       buttonClick(e) {
         // 1. 判断是否点击了 加入购物车 按钮
         if (e.content.text === '加入购物车') {
-
           // 2. 组织一个商品的信息对象
           const goods = {
             goods_id: this.goods_info.goods_id, // 商品的Id
@@ -122,10 +121,8 @@
             goods_small_logo: this.goods_info.goods_small_logo, // 商品的图片
             goods_state: true // 商品的勾选状态
           }
-
           // 3. 通过 this 调用映射过来的 addToCart 方法，把商品信息对象存储到购物车中
           this.addToCart(goods)
-
         }
       }
 
@@ -136,12 +133,16 @@
       ...mapGetters('m_cart', ['total'])
     },
     watch: {
-      total(newVal) {
-        const findResult = this.options.find(x => x.text === '购物车')
-        if (findResult) {
-          // 3. 动态为购物车按钮的 info 属性赋值
-          findResult.info = newVal
-        }
+      total: {
+        handler(newVal) {
+          const findResult = this.options.find(x => x.text === '购物车')
+          if (findResult) {
+            // 3. 动态为购物车按钮的 info 属性赋值
+            findResult.info = newVal
+          }
+        },
+        //在页面初次加载完毕后立即调用
+        immediate: true
       }
     }
   }
