@@ -2,12 +2,12 @@
   <view>
 
     <!-- 选择收货地址的盒子 -->
-    <view class="address-choose-box">
-      <button type="primary" size="mini" class="btnChooseAddress">请选择收货地址+</button>
+    <view class="address-choose-box" v-if="JSON.stringify(address)==='{}'">
+      <button type="primary" size="mini" class="btnChooseAddress" @click="chooseAddress">请选择收货地址+</button>
     </view>
 
     <!-- 渲染收货信息的盒子 -->
-    <view class="address-info-box">
+    <view class="address-info-box" v-else>
       <view class="row1">
         <view class="row1-left">
           <view class="username">收货人：<text>escook</text></view>
@@ -26,7 +26,7 @@
     <!-- 底部的边框线 -->
     <image src="/static/cart_border@2x.png" class="address-border"></image>
   </view>
-
+  <!-- <view></view> -->
 </template>
 
 <script>
@@ -34,8 +34,17 @@
     name: "my-address",
     data() {
       return {
-
+        //收货地址
+        address: {}
       };
+    },
+    methods: {
+      async chooseAddress() {
+        const [err, succ] = await uni.chooseAddress().catch(err => err)
+        if (err === null && succ.errMsg == 'chooseAddress:ok') {
+          this.address = succ
+        }
+      }
     }
   }
 </script>
